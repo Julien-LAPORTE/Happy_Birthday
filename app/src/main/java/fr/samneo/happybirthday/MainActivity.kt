@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -33,7 +31,7 @@ import fr.samneo.happybirthday.ui.theme.HappyBirthdayTheme
 const val USER_NAME = "Sam"
 const val SENDER_NAME = "Emma"
 const val GREETING_TEXT_FONT_SIZE = 80
-const val SIGNATURE_TEXT_FONT_SIZE = 30
+const val SIGNATURE_TEXT_FONT_SIZE = 28
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    BirthdayCard(USER_NAME)
+                    BirthdayCard()
                 }
             }
         }
@@ -52,7 +50,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BirthdayCard(name: String, modifier: Modifier = Modifier) {
+fun BirthdayCard() {
     Box {
         GreetingImage()
         GreetingText(
@@ -72,10 +70,9 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.Center, modifier = modifier.padding(8.dp)
     ) {
-        val modifier = Modifier.fillMaxWidth()
         Text(
             text = message,
-            //Taille d'un ligne qui correspond à la taille de la police + 10%
+            //Line size matches font size +10%
             lineHeight = (GREETING_TEXT_FONT_SIZE + (GREETING_TEXT_FONT_SIZE * 0.1)).sp,
             fontSize = GREETING_TEXT_FONT_SIZE.sp,
             textAlign = TextAlign.Center,
@@ -85,7 +82,8 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
             text = stringResource(R.string.signature_text, from),
             fontSize = SIGNATURE_TEXT_FONT_SIZE.sp,
             textAlign = TextAlign.End,
-            modifier = modifier
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(16.dp),
             style = TextStyle(
                 shadow = Shadow(color = Color.Blue, offset = offset, blurRadius = 3f)
@@ -95,7 +93,7 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun GreetingImage(modifier: Modifier = Modifier) {
+fun GreetingImage() {
     val image = painterResource(id = R.drawable.androidparty)
     Image(
         painter = image, contentDescription = null, contentScale = ContentScale.Crop, alpha = 0.5f
@@ -106,7 +104,7 @@ fun GreetingImage(modifier: Modifier = Modifier) {
 @Composable
 fun BirthdayCardPreview() {
     HappyBirthdayTheme {
-        BirthdayCard(name = USER_NAME)
+        BirthdayCard()
     }
 }
 
